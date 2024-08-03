@@ -11,6 +11,7 @@ struct FormData {
 }
 
 #[post("/subscriptions")]
+#[allow(clippy::async_yields_async)]
 #[instrument(
     name = "Adding a new subscriber",
     skip(form, pool),
