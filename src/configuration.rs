@@ -39,7 +39,7 @@ impl DatabaseSettings {
             .port(self.port)
             .ssl_mode(ssl_mode)
     }
-    
+
     pub fn with_db(&self) -> PgConnectOptions {
         self.without_db()
             .database(&self.database_name)
