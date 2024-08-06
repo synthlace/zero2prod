@@ -6,7 +6,12 @@ edition = "2021"
 [dependencies]
 actix-web = "4.8.0"
 chrono = "0.4.38"
+claims = "0.7.1"
 config = "0.14.0"
+fake = "2.9.2"
+quickcheck = "1.0.3"
+quickcheck_macros = "1.0.0"
+rand = "0.8.5"
 reqwest = "0.12.5"
 secrecy = { version = "0.8.0", features = ["serde"] }
 serde = { version = "1.0.204", features = ["derive"] }
@@ -26,4 +31,6 @@ tracing-subscriber = { version = "0.3.18", features = [
     "registry",
     "env-filter",
 ] }
+unicode-segmentation = "1.11.0"
 uuid = { version = "1.10.0", features = ["v4"] }
+validator = "0.18.1"
