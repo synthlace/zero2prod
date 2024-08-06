@@ -7,7 +7,7 @@ edition = "2021"
 actix-web = "4.8.0"
 chrono = "0.4.38"
 claims = "0.7.1"
-config = "0.14.0"
+config = { version = "0.14.0", default-features = false, features = ["ron"] }
 fake = "2.9.2"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
