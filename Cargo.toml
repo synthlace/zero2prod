@@ -12,9 +12,10 @@ fake = "2.9.2"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 rand = "0.8.5"
-reqwest = "0.12.5"
+reqwest = { version = "0.12.5", features = ["json"] }
 secrecy = { version = "0.8.0", features = ["serde"] }
 serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.122"
 sqlx = { version = "0.8.0", features = [
     "migrate",
     "chrono",
@@ -23,7 +24,7 @@ sqlx = { version = "0.8.0", features = [
     "macros",
     "runtime-tokio-rustls",
 ] }
-tokio = { version = "1.39.2", features = ["full"] }
+tokio = { version = "1.39.2", features = ["macros", "rt-multi-thread"] }
 tracing = { version = "0.1.40" }
 tracing-actix-web = "0.7.11"
 tracing-bunyan-formatter = "0.3.9"
@@ -34,3 +35,4 @@ tracing-subscriber = { version = "0.3.18", features = [
 unicode-segmentation = "1.11.0"
 uuid = { version = "1.10.0", features = ["v4"] }
 validator = "0.18.1"
+wiremock = "0.6.1"
