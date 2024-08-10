@@ -139,7 +139,8 @@ mod tests {
             .send_email(email(), &subject(), &content(), &content())
             .await;
 
-        // Assert ^^^ in Mock
+        // Assert
+        // Mock asserts on drop
     }
 
     #[tokio::test]
