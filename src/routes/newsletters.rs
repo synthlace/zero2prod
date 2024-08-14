@@ -104,10 +104,23 @@ async fn validate_credentials(
     credentials: Credentials,
     pool: &PgPool,
 ) -> Result<uuid::Uuid, PublishError> {
-    let (user_id, expected_password_hash) = get_stored_credentials(&credentials.username, pool)
-        .await
-        .map_err(PublishError::UnexpectedError)?
-        .ok_or_else(|| PublishError::AuthError(anyhow::anyhow!("Unknown username.")))?;
+    // Remove the timing difference between an auth failure due to an invalid password and an authfailure due to a non-existent username
+    let mut user_id = None;
+    let mut expected_password_hash = SecretString::new(
+        "$argon2id$v=19$m=15000,t=2,p=1$\
+        Rkt6Q05lODB3VTB0aFlBVw$\
+        DBvG6pVzNR9+WHVnKcwhfpjgBW6NPvXOQPHokl07KwU"
+            .to_string(),
+    );
+
+    if let Some((stored_user_id, stored_password_hash)) =
+        get_stored_credentials(&credentials.username, &pool)
+            .await
+            .map_err(PublishError::UnexpectedError)?
+    {
+        user_id = Some(stored_user_id);
+        expected_password_hash = stored_password_hash;
+    }
 
     spawn_blocking_with_tracing(|| {
         verify_password_hash(expected_password_hash, credentials.password)
@@ -118,7 +131,7 @@ async fn validate_credentials(
     .context("Invalid password.")
     .map_err(PublishError::AuthError)?;
 
-    Ok(user_id)
+    user_id.ok_or_else(|| PublishError::AuthError(anyhow::anyhow!("Unknown username.")))
 }
 
 #[tracing::instrument(
