@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 actix-web = "4.8.0"
 anyhow = "1.0.86"
+argon2 = { version = "0.5.3", features = ["std"] }
+base64 = "0.22.1"
 chrono = "0.4.38"
 claims = "0.7.1"
 config = { version = "0.14.0", default-features = false, features = ["ron"] }
