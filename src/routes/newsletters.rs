@@ -11,7 +11,9 @@ use base64::prelude::{Engine, BASE64_STANDARD};
 use secrecy::{ExposeSecret, SecretString};
 use sqlx::PgPool;
 
-use crate::{domain::SubscriberEmail, email_client::EmailClient};
+use crate::{
+    domain::SubscriberEmail, email_client::EmailClient, telemetry::spawn_blocking_with_tracing,
+};
 
 use super::error_chain_fmt;
 
@@ -107,7 +109,7 @@ async fn validate_credentials(
         .map_err(PublishError::UnexpectedError)?
         .ok_or_else(|| PublishError::AuthError(anyhow::anyhow!("Unknown username.")))?;
 
-    actix_web::rt::task::spawn_blocking(move || {
+    spawn_blocking_with_tracing(|| {
         verify_password_hash(expected_password_hash, credentials.password)
     })
     .await
