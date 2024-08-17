@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.8.0"
+actix-web-flash-messages = { version = "0.4.2", features = ["cookies"] }
 anyhow = "1.0.86"
 argon2 = { version = "0.5.3", features = ["std"] }
 base64 = "0.22.1"
@@ -12,11 +13,12 @@ chrono = "0.4.38"
 claims = "0.7.1"
 config = { version = "0.14.0", default-features = false, features = ["ron"] }
 fake = "2.9.2"
+htmlescape = "0.3.1"
 linkify = "0.10.0"
 quickcheck = "1.0.3"
 quickcheck_macros = "1.0.0"
 rand = { version = "0.8.5", features = ["std_rng"] }
-reqwest = { version = "0.12.5", features = ["json"] }
+reqwest = { version = "0.12.5", default-features = false, features = ["json", "rustls-tls", "cookies"] }
 secrecy = { version = "0.8.0", features = ["serde"] }
 serde = { version = "1.0.204", features = ["derive"] }
 serde_json = "1.0.122"
@@ -38,6 +40,7 @@ tracing-subscriber = { version = "0.3.18", features = [
     "env-filter",
 ] }
 unicode-segmentation = "1.11.0"
+urlencoding = "2.1.3"
 uuid = { version = "1.10.0", features = ["v4"] }
 validator = "0.18.1"
 wiremock = "0.6.1"

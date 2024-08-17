@@ -1,6 +1,7 @@
 BaseConfig(
     application: (
-        port: 8080
+        port: 8080,
+        hmac_secret: "in-the-glow-of-neon-ruins-holo-shadows-whisper-cyber-secrets-through-the-void"
     ),
     database: (
         host: "localhost",
