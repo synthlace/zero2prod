@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 actix-session = { version = "0.10.0", features = ["redis-session-rustls"] }
-actix-web = "4.8.0"
+actix-web = "4.9.0"
 actix-web-flash-messages = { version = "0.4.2", features = ["cookies"] }
 anyhow = "1.0.86"
 argon2 = { version = "0.5.3", features = ["std"] }
