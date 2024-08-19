@@ -1,12 +1,13 @@
 use std::net::TcpListener;
 
 use crate::{
+    authentication::reject_anonymous_users,
     configuration::{DatabaseSettings, Settings},
     email_client::EmailClient,
     routes::*,
 };
 use actix_session::{storage::RedisSessionStore, SessionMiddleware};
-use actix_web::{cookie::Key, dev::Server, web, App, HttpServer};
+use actix_web::{cookie::Key, dev::Server, middleware::from_fn, web, App, HttpServer};
 use actix_web_flash_messages::{storage::CookieMessageStore, FlashMessagesFramework};
 use secrecy::{ExposeSecret, SecretString};
 use sqlx::{postgres::PgPoolOptions, PgPool};
@@ -111,10 +112,14 @@ pub async fn run(
             .service(home)
             .service(login_form)
             .service(login)
-            .service(admin_dashboard)
-            .service(change_password)
-            .service(change_password_form)
-            .service(log_out)
+            .service(
+                web::scope("/admin")
+                    .wrap(from_fn(reject_anonymous_users))
+                    .service(admin_dashboard)
+                    .service(change_password)
+                    .service(change_password_form)
+                    .service(log_out),
+            )
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
