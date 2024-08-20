@@ -108,7 +108,6 @@ pub async fn run(
             .service(health_check)
             .service(subscribe)
             .service(confirm)
-            .service(publish_newsletter)
             .service(home)
             .service(login_form)
             .service(login)
@@ -118,7 +117,9 @@ pub async fn run(
                     .service(admin_dashboard)
                     .service(change_password)
                     .service(change_password_form)
-                    .service(log_out),
+                    .service(log_out)
+                    .service(publish_newsletter_form)
+                    .service(publish_newsletter),
             )
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
